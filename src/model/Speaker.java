@@ -1,33 +1,50 @@
 package model;
 
+import utils.ValidationUtils;
+
 import java.time.LocalDate;
 
 public class Speaker extends Person {
+
     private String academicDegree;
     private String specializationArea;
 
-    public Speaker(String cpf, LocalDate birthDate, String email, String name, String academicDegree, String specializationArea) {
-        super(cpf, birthDate, email, name);
+    public Speaker(String cpf, String name, String email, LocalDate birthDate, String academicDegree, String specializationArea) {
+        super(cpf, name, email, birthDate);
+        setAcademicDegree(academicDegree);
+        setSpecializationArea(specializationArea);
     }
+
+    @Override
+    public String getPersonRole() {
+        return "Speaker";
+    }
+
     public String getAcademicDegree() {
         return academicDegree;
     }
-    public void setAcademicDegree(String academicDegree) {
-        if (academicDegree == null || academicDegree.trim().isEmpty()){
-            throw new IllegalArgumentException("Academic degree cannot be empty");
-        }
-        this.academicDegree = academicDegree.trim();
-    }
+
     public String getSpecializationArea() {
         return specializationArea;
     }
+
     public void setSpecializationArea(String specializationArea) {
-        if (specializationArea == null || specializationArea.trim().isEmpty()){
-            throw new IllegalArgumentException("Specialization area cannot be empty");
-        }
-        this.specializationArea = specializationArea.trim();
+        ValidationUtils.validateText(specializationArea, "Specialization Area");
+        this.specializationArea = specializationArea;
     }
+
+    public void setAcademicDegree(String academicDegree) {
+        ValidationUtils.validateText(academicDegree, "Academic Degree");
+        this.academicDegree = academicDegree;
+    }
+
     @Override
-    public void getPersonType() {
+    public String toString() {
+
+        return "Speaker{" +
+                "name='" + getName() + '\'' +
+                ", academicDegree='" + academicDegree + '\'' +
+                ", specializationArea='" + specializationArea + '\'' +
+                '}';
     }
 }
